@@ -9,7 +9,7 @@ const db = () => {
     .then((data) => {
       console.log(`connect with mongodb port: ${data.connection.port}`)
     })
-    .catch((err) => console.log(err))
-}
+    
+} 
 
 module.exports = db
