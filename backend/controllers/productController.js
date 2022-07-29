@@ -4,6 +4,7 @@ const AsynsErrorhandler = require('../middleware/asynsErrorhandler')
 const ApiFeatures = require('../utils/ApiFeatures')
 //create product --admin use
 exports.createProduct = AsynsErrorhandler(async (req, res, next) => {
+  req.body.user = req.user.id
   const product = await Product.create(req.body)
   res.status(201).json({
     success: true,
