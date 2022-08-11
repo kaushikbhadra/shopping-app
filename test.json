@@ -1,0 +1,27 @@
+{
+  "shippingInfo": {
+    "address": "A143 Nehru Chowk",
+    "city": "Jamsedpur",
+    "state": "Jharkhand",
+    "country": "India",
+    "pinCode": 832140,
+    "phoneNo": 6854423785
+  },
+  "orderItems": [
+    {
+      "name": "Floor",
+      "price": 300,
+      "quantity": 2,
+      "product": "6290e39faf2b4f4139ea416d",
+      "image": "sample image"
+    }
+  ],
+  "paymentInfo": {
+    "id": "sample Id",
+    "status": "successed"
+  },
+  "ItemsPrice": 600,
+  "taxPrice": 100,
+  "shippingPrice": 40,
+  "totalPrice": 740
+}
