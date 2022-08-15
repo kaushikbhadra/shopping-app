@@ -23,5 +23,8 @@
   "ItemsPrice": 600,
   "taxPrice": 100,
   "shippingPrice": 40,
-  "totalPrice": 740
+  "totalPrice": 740,
+  "react-alert": "import { ToastContainer, toast } from 'react-toastify';",
+  "css": "import 'react-toastify/dist/ReactToastify.css';"
+ 
 }
