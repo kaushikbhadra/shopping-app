@@ -14,14 +14,14 @@ exports.createProduct = AsynsErrorhandler(async (req, res, next) => {
 
 //show all product
 exports.getAllProducts = AsynsErrorhandler(async (req, res) => {
-  const resultPerPage = 5
+  const resultPerPage = 8
   const productCount = await Product.countDocuments()
   const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()
     .filter()
     .pagination(resultPerPage)
-  const product = await apiFeature.query
-  res.status(200).json({ success: true, product, productCount })
+  const products = await apiFeature.query
+  res.status(200).json({ success: true, products, productCount })
 })
 
 //show single product
