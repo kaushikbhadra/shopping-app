@@ -7,7 +7,7 @@ const db = () => {
       useUnifiedTopology: true,
     })
     .then((data) => {
-      console.log(`connect with mongodb port: ${data.connection.port}`)
+      console.log(`connect with mongodb port number: ${data.connection.port}`)
     })
     
 } 

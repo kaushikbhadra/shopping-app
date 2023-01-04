@@ -1,5 +1,6 @@
 const app = require('./app')
 const db = require('./db/mongoose')
+
 //Handled uncaught Exception
 process.on('uncaughtException', (err) => {
   console.log(`Error: ${err.message}`)

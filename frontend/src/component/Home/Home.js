@@ -1,16 +1,17 @@
 import React, { Fragment } from 'react'
 import { BsMouse } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
-// import {showLoading} from '../../store/productSlice'
-import Product from './Product.js'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Product from '../Product/Product'
 import Pagetitle from '../layout/Title/Pagetitle'
-
+import Loader from '../layout/Loader/Loader'
 import './Home.css'
 
-// https://cdn.shopify.com/s/files/1/0613/8622/7909/products/PimaJerseyShirtBlue-2_3c3f397f-c369-4f7c-941c-236c5b66f82a_1800x1800.jpg?v=1654594444
 const Home = () => {
-  const isloading = useSelector((state) => state.product.isloading)
+  const isloading = useSelector((state) => state.loader.isloading)
   const products = useSelector((state) => state.product.products)
+
   return (
     <Fragment>
       <Pagetitle title='Home Page' />
@@ -26,14 +27,18 @@ const Home = () => {
       </div>
       <h2 className='homeHeading'>Featured Products</h2>
       {isloading ? (
-        'loading...'
+        <Loader />
       ) : (
         <div className='container' id='container'>
-          {products && products.map((product) => <Product key={product._id} product={product} />)}
+          {products &&
+            products.map((product) => (
+              <Product key={product._id} product={product} />
+            ))}
         </div>
       )}
+      <ToastContainer />
     </Fragment>
   )
 }
-
+ 
 export default Home
