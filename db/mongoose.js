@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const url = process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/ecommerce'
+const url = process.env.MONGODB_URL
 
 const db = () => {
   mongoose
