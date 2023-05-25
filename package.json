@@ -4,8 +4,8 @@
   "description": "ecommerce site where shopping list visible.",
   "main": "backend/server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "env-cmd -f ./backend/config/dev.env nodemon backend/server.js"
+    "start": "node server.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon server.js"
   },
   "author": "Kaushik Bhadra",
   "license": "ISC",

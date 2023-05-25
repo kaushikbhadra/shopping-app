@@ -1,9 +1,11 @@
 const mongoose = require('mongoose')
 
+const url = process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/ecommerce'
+
 const db = () => {
   mongoose
     .set('strictQuery', true)
-    .connect(process.env.MONGODB_URL, {
+    .connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })

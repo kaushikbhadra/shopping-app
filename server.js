@@ -7,7 +7,7 @@ process.on('uncaughtException', (err) => {
   console.log(`Shutdown the server due to uncaught Exception`)
   process.exit(1)
 })
-const port = process.env.PORT
+const port = process.env.PORT || 3001
 
 db()
 
