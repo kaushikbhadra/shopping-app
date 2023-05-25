@@ -36,21 +36,21 @@ Shopping Application API built using `Node.js`, `Express.js`, and `MongoDB` can 
 **User Related APIs**:
 - POST Request
 ````javascript 
-http://localhost:3001/api/v1/register
-http://localhost:3001/api/v1/password/forgot
-http://localhost:3001/api/v1/password/forgot
+https://shop-app-4ep1.onrender.com/api/v1/register
+https://shop-app-4ep1.onrender.com/api/v1/password/forgot
+https://shop-app-4ep1.onrender.com/api/v1/password/forgot
 ````
 - PUT Request
 ````javascript 
-http://localhost:3001/api/v1/password/reset/:token
-http://localhost:3001/api/v1/password/update
-http://localhost:3001/api/v1/me/update
+https://shop-app-4ep1.onrender.com/api/v1/password/reset/:token
+https://shop-app-4ep1.onrender.com/api/v1/password/update
+https://shop-app-4ep1.onrender.com/api/v1/me/update
 ````
 
   - GET Request
 ````javascript 
-http://localhost:3001/api/v1/me
-http://localhost:3001/api/v1/logout
+https://shop-app-4ep1.onrender.com/api/v1/me
+https://shop-app-4ep1.onrender.com/api/v1/logout
 ````
 
 Similar Type of APIs are present in this project.
