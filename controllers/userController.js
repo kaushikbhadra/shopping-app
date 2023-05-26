@@ -1,4 +1,5 @@
 const crypto = require('crypto')
+const cloudinary = require('cloudinary').v2
 const User = require('../models/userModel')
 const ErrorHandler = require('../utils/Errorhandler')
 const AsynsErrorhandler = require('../middleware/asynsErrorhandler')
@@ -6,14 +7,19 @@ const jwtToken = require('../utils/jwtToken')
 const sendEmail = require('../utils/sendEmail')
 
 exports.registerUser = AsynsErrorhandler(async (req, res, next) => {
+  const cloudavatar = await cloudinary.uploader.upload(req.body.avatar, {
+    folder: "avatars",
+    width: 150,
+    crop: "scale"
+  })
   const { name, email, password } = req.body
   const user = await User.create({
     name,
     email,
     password,
     avatar: {
-      public_id: '58w7y8wy98ycw38799',
-      url: 'profileURL',
+      public_id: cloudavatar.public_id,
+      url: cloudavatar.url,
     },
   })
 
@@ -58,12 +64,11 @@ exports.forgotPassword = AsynsErrorhandler(async (req, res, next) => {
     return next(new ErrorHandler('User not found', 404))
   }
 
-  //ResetPassword Token
+  //ResetPassword Token 
+  //Generated Url: ${req.protocol}://${req.get('host')}
   const resetToken = user.getResetPasswordToken()
   await user.save({ validateBeforeSave: false })
-  const resetPasswordUrl = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/password/reset/${resetToken}`
+  const resetPasswordUrl = `${process.env.CORS}/password/reset/${resetToken}`
   const message = `Your password reset token is:= \n\n ${resetPasswordUrl} \n\nIf you have not requested this email than, please ignore it`
   try {
     await sendEmail({
@@ -134,6 +139,21 @@ exports.updateProfile = AsynsErrorhandler(async (req, res, next) => {
   const newData = {
     name: req.body.name,
     email: req.body.email,
+  }
+
+  if(req.body.avatar !== ""){
+    const user = await User.findById(req.user.id)
+    const avatar_id = user.avatar.public_id
+    await cloudinary.uploader.destroy(avatar_id)
+    const cloudavatar = await cloudinary.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale"
+    })
+    newData.avatar = {
+      public_id: cloudavatar.public_id,
+      url: cloudavatar.url,
+    }
   }
 
   const user = await User.findByIdAndUpdate(req.user.id, newData, {

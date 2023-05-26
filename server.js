@@ -1,3 +1,4 @@
+const cloudinary = require('cloudinary').v2
 const app = require('./app')
 const db = require('./db/mongoose')
 
@@ -10,6 +11,13 @@ process.on('uncaughtException', (err) => {
 const port = process.env.PORT || 3001
 
 db()
+
+// Configuration 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_SECRET
+});
 
 const server = app.listen(port, () => {
   console.log('Server is up on port ' + port)
