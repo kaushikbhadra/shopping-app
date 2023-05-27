@@ -7,10 +7,12 @@ const jwtToken = require('../utils/jwtToken')
 const sendEmail = require('../utils/sendEmail')
 
 exports.registerUser = AsynsErrorhandler(async (req, res, next) => {
-  const cloudavatar = await cloudinary.uploader.upload(req.body.avatar, {
-    folder: "avatars",
+  const file = req.files.avatar
+  const cloudavatar = await cloudinary.uploader.upload(file.tempFilePath, {
+    public_id: `${Date.now()}`,
+    folder: 'avatars',
     width: 150,
-    crop: "scale"
+    crop: 'scale',
   })
   const { name, email, password } = req.body
   const user = await User.create({
@@ -64,7 +66,7 @@ exports.forgotPassword = AsynsErrorhandler(async (req, res, next) => {
     return next(new ErrorHandler('User not found', 404))
   }
 
-  //ResetPassword Token 
+  //ResetPassword Token
   //Generated Url: ${req.protocol}://${req.get('host')}
   const resetToken = user.getResetPasswordToken()
   await user.save({ validateBeforeSave: false })
@@ -141,14 +143,16 @@ exports.updateProfile = AsynsErrorhandler(async (req, res, next) => {
     email: req.body.email,
   }
 
-  if(req.body.avatar !== ""){
+  if (req.body.avatar !== '') {
     const user = await User.findById(req.user.id)
     const avatar_id = user.avatar.public_id
     await cloudinary.uploader.destroy(avatar_id)
-    const cloudavatar = await cloudinary.uploader.upload(req.body.avatar, {
-      folder: "avatars",
+    const file = req.files.avatar
+    const cloudavatar = await cloudinary.uploader.upload(file.tempFilePath, {
+      public_id: `${Date.now()}`,
+      folder: 'avatars',
       width: 150,
-      crop: "scale"
+      crop: 'scale',
     })
     newData.avatar = {
       public_id: cloudavatar.public_id,

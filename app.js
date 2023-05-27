@@ -18,7 +18,10 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(fileUpload())
+app.use(fileUpload({
+    useTempFiles: true,
+    limits: {fileSize: 50*1024*1024}
+}))
 
 app.use('/api/v1', product)
 app.use('/api/v1', user)
