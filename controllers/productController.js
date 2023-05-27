@@ -1,10 +1,30 @@
+const cloudinary = require('cloudinary').v2
 const Product = require('../models/productModel')
 const ErrorHandler = require('../utils/Errorhandler')
 const AsynsErrorhandler = require('../middleware/asynsErrorhandler')
 const ApiFeatures = require('../utils/ApiFeatures')
 //create product --admin use
 exports.createProduct = AsynsErrorhandler(async (req, res, next) => {
+  let productImages = []
+  if (typeof req.body.images === 'string') {
+    productImages.push(req.files.images)
+  } else {
+    productImages = req.files.images
+  }
+
+  const productImagesLinks = []
+  for (let image of productImages) {
+    const result = await cloudinary.uploader.upload(image.tempFilePath, {
+      folder: 'products',
+      public_id: `${Date.now()}`,
+    })
+    productImagesLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    })
+  }
   req.body.user = req.user.id
+  req.body.images = productImagesLinks
   const product = await Product.create(req.body)
   res.status(201).json({
     success: true,
@@ -39,6 +59,32 @@ exports.updateProduct = AsynsErrorhandler(async (req, res, next) => {
   let product = await Product.findById(req.params.id)
   if (!product) {
     return next(new ErrorHandler('Product not found', 404))
+  }
+
+  let productImages = []
+  if (typeof req.body.images === 'string') {
+    productImages.push(req.files.images)
+  } else {
+    productImages = req.files.images
+  }
+
+  if (productImages !== undefined) {
+    for (let image of product.images) {
+      await cloudinary.uploader.destroy(image.public_id)
+    }
+    const productImagesLinks = []
+    for (let image of productImages) {
+      const result = await cloudinary.uploader.upload(image.tempFilePath, {
+        folder: 'products',
+        public_id: `${Date.now()}`,
+      })
+      productImagesLinks.push({
+        public_id: result.public_id,
+        url: result.secure_url,
+      })
+    }
+
+    req.body.images = productImagesLinks
   }
   product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
