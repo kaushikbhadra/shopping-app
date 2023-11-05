@@ -48,7 +48,8 @@ https://shop-app-4ep1.onrender.com/api/v1/me/update
 ````
 
   - GET Request
-````javascript 
+````javascript
+https://shop-app-4ep1.onrender.com/api/v1/products
 https://shop-app-4ep1.onrender.com/api/v1/me
 https://shop-app-4ep1.onrender.com/api/v1/logout
 ````
